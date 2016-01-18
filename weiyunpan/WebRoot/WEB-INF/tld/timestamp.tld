@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+    version="2.0">
+    <description>格式化时间戳</description>
+    <tlib-version>1.0</tlib-version>
+ 	<short-name>time</short-name>
+ 	<uri>http://www.yunpan.com/formattimestamp</uri>
+ 	<!-- 第一种用在自定义标签 -->
+    <tag>
+        <name>formattimestamp</name>
+        <tag-class>com.yunpan.tag.FormatTimeTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>timestamp</name>
+            <required>true</required>
+            <fragment>true</fragment>
+        </attribute>
+        <attribute>
+            <name>format</name>
+            <required>true</required>
+            <fragment>true</fragment>
+        </attribute>
+    </tag>
+   <!-- 第二种用在EL表达式中：
+   	实现：
+   		1.类必须是公共的。
+   		2.方法必须是公共的静态方法 
+   	-->
+	<function>
+        <description>自定义格式化时间戳EL表达式</description>
+        <name>ELformat</name>
+        <function-class>com.yunpan.util.StringHelper</function-class>
+        <function-signature>java.lang.String getDateByTimeStamp(long,java.lang.String )</function-signature>
+    </function>
+    
+    <function>
+        <description>格式化大小表达式</description>
+        <name>getSize</name>
+        <function-class>com.yunpan.util.StringHelper</function-class>
+        <function-signature>float GetMoneyByNum(int,int)</function-signature>
+    </function>
+   
+   
+</taglib>
+
+
+

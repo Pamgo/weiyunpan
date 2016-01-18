@@ -1,0 +1,17 @@
+package com.yunpan.test;
+
+import org.junit.Test;
+
+import com.yunpan.db.DBUtil;
+import com.yunpan.util.StringHelper;
+
+public class DBUtilTest {
+	@Test
+	public void testConnection(){
+		System.out.println(DBUtil.getConnection());
+	}
+	@Test
+	public void testexecuteQuery(){
+		System.out.println(StringHelper.MD5((String)DBUtil.executeQuery("select password from users where id=1")));
+	}
+}

@@ -1,0 +1,49 @@
+package com.yunpan.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.yunpan.dao.IDiskInfoDao;
+import com.yunpan.db.DBUtil;
+import com.yunpan.db.IResultSetUtil;
+import com.yunpan.entity.DiskInfo;
+import com.yunpan.entity.FileInfo;
+
+/**
+ * 网盘操作类
+ * @author pamgo
+ * @version v1.0
+ */
+public class DiskInfoDaoImpl implements IDiskInfoDao {
+
+	/**
+	 * 获取用户网盘使用情况
+	 */
+	@Override
+	public DiskInfo load(int userid) {
+		String sql = "select total_size,used_size,filenumber from yp_diskinfo where disk_userid = ?";
+		return (DiskInfo) DBUtil.executeQuery(sql, new IResultSetUtil() {
+			@Override
+			public Object doHandler(ResultSet rs) throws SQLException {
+				DiskInfo diskInfo = new DiskInfo();
+				while(rs.next()){
+					diskInfo.setTotal_size(rs.getLong(1));
+					diskInfo.setUsed_size(rs.getLong(2));
+					diskInfo.setFilenumber(rs.getInt(3));
+				}
+				return diskInfo;
+			}
+		}, userid);
+	}
+
+	/**
+	 * 检查网盘空间是否满
+	 */
+	@Override
+	public boolean isEnoughSpace(FileInfo myFile) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+}

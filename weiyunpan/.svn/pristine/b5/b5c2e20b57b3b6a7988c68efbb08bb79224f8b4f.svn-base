@@ -1,0 +1,25 @@
+package com.yunpan.service.impl;
+
+import com.yunpan.dao.IUserDao;
+import com.yunpan.dao.impl.UserDaoImpl;
+import com.yunpan.entity.User;
+import com.yunpan.service.IUserService;
+
+/**
+ * 用户操作业务接口实现类
+ * @author pamgo
+ *
+ */
+public class UserServiceImpl implements IUserService {
+
+	/**
+	 * 用户登录
+	 * result: 1代表用户名错误；2代表密码错误；3代表正确
+	 */
+	@Override
+	public String login(String username, String password) {
+		IUserDao userDao = new UserDaoImpl();
+		return userDao.login(username, password);
+	}
+
+}

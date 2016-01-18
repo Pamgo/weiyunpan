@@ -1,0 +1,29 @@
+package com.yunpan.dao.impl;
+
+import com.yunpan.dao.IFolderInfoDao;
+import com.yunpan.db.DBUtil;
+import com.yunpan.entity.FoldlerInfo;
+import com.yunpan.entity.User;
+
+/**
+ * 文件夹操作接口类
+ * 
+ * @author pamgo
+ * 
+ */
+public class FolderInfoDaoImpl implements IFolderInfoDao {
+
+	/**
+	 * 为用户创建一个原始文件夹
+	 * 
+	 * @return
+	 */
+	@Override
+	public boolean createFolderByUser(FoldlerInfo folder, User user) {
+		String sql = "insert into yp_folderinfo(foldername,create_userid,path,parent_path,create_time) values(?,?,?,?,?)";
+		return DBUtil.executeUpdate(sql, folder.getFoldername(), user.getId(),
+				folder.getPath(), folder.getParent_path(),
+				folder.getCreated_time()) > 0;
+	}
+
+}

@@ -1,0 +1,95 @@
+package com.yunpan.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.sun.xml.internal.ws.message.StringHeader;
+import com.yunpan.dao.IUserDao;
+import com.yunpan.db.DBUtil;
+import com.yunpan.db.IResultSetUtil;
+import com.yunpan.entity.User;
+import com.yunpan.util.StringHelper;
+
+/**
+ * 使用用户操作的接口类
+ * @author pamgo
+ *
+ */
+public class UserDaoImpl implements IUserDao {
+
+	/**
+	 * 用户登录
+	 * result: 1代表用户名错误；2代表密码错误；3代表正确
+	 */
+	@Override
+	public String login(String username, String password) {
+		String sql = "select password from users where username = ?";
+		Object result = DBUtil.executeQuery(sql,username);
+		if(result == null){
+			return "1";
+		}else{
+			if(result.toString().equals(password)){
+				return "3";
+			}else{
+				return "2";
+			}
+		}
+	}
+
+	/**
+	 * 用户注册
+	 */
+	@Override
+	public boolean save(User user) {
+		String sql = "insert into user(email,username,password) values(?,?,?)";
+		return DBUtil.executeUpdate(sql, user.getEmail(),user.getUsername(),StringHelper.MD5(user.getPassword())) > 0;
+	}
+
+	/**
+	 * 根据用户名查询用户id
+	 */
+	@Override
+	public Integer getUserIdByUsername(String username) {
+		String sql = "select id from users where username = ?";
+		return (Integer) DBUtil.executeQuery(sql, username);
+	}
+
+	/**
+	 * 通过邮箱和用户名验证用户是否存在
+	 * return 1:代表存在；2代表不存在
+	 */
+	@Override
+	public String confirm(String email, String username) {
+		String sql = "select username from users where email = ? and username = ?";
+		Object result = DBUtil.executeQuery(sql, email,username);
+		if(result != null){
+			return "1";
+		}else{
+			return "2";
+		}
+	}
+
+	/**
+	 * 验证用户名是否可用
+	 * return 1:代表可用；2:代表不可用
+	 */
+	@Override
+	public String confirmUsername(String username) {
+		String sql = "select email from users where username = ?";
+		Object result = DBUtil.executeQuery(sql, username);
+		if(result != null){
+			return "2";
+		}else{
+			return "1";
+		}
+	}
+
+	/**
+	 * 根据用户id查询用户名称
+	 */
+	@Override
+	public String getUserNameByUserid(int userid) {
+		String sql = "select username from users where id = ?";
+		return String.valueOf(DBUtil.executeQuery(sql, userid));
+	}
+}

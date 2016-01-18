@@ -1,0 +1,137 @@
+package com.yunpan.util;
+
+import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+/**
+ * 字符串处理工具类
+ * @author alison
+ * @version 1.0
+ *
+ */
+public class StringHelper {
+	/**
+	 * 
+	 * 将一个字符串进行 MD5 加密<BR/>
+	 * 方法名：MD5<BR/>
+	 * 创建人：auger <BR/>
+	 * 
+	 * @param securityStr
+	 * @return String<BR/>
+	 * @exception <BR/>
+	 * @since 1.0.0
+	 */
+	public static String MD5(String securityStr) {
+		char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+				'A', 'B', 'C', 'D', 'E', 'F' };
+		try {
+			byte[] btInput = securityStr.getBytes();
+			// 获得MD5摘要算法的 MessageDigest 对象
+			MessageDigest mdInst = MessageDigest.getInstance("MD5");
+			// 使用指定的字节更新摘要
+			mdInst.update(btInput);
+			// 获得密文
+			byte[] md = mdInst.digest();
+			// 把密文转换成十六进制的字符串形式
+			int j = md.length;
+			char str[] = new char[j * 2];
+			int k = 0;
+			for (int i = 0; i < j; i++) {
+				byte byte0 = md[i];
+				str[k++] = hexDigits[byte0 >>> 4 & 0xf];
+				str[k++] = hexDigits[byte0 & 0xf];
+			}
+			return new String(str).toLowerCase();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * 获取当前格式化时间(yyyy-MM-dd hh:mm:ss)
+	 * 方法名：getCurrentFormatDate
+	 * @author alison
+	 * @return String<BR/>
+	 * @exception <BR/>
+	 * @since 1.0.0
+	 */
+	public static String getCurrentFormatDate(){
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String datetime = sdf.format(date);
+		return datetime;
+	}
+	
+	/**
+	 * 获取当前时间戳
+	 * 方法名：getCurrentTimeStamp
+	 * @author alison
+	 * @return long
+	 * @since 1.0.0
+	 */
+	public static long getCurrentTimeStamp(){
+		return System.currentTimeMillis();
+	}
+	
+	/**
+	 * 将时间戳转换成时间格式为"yyyy-MM-dd hh:mm:ss"
+	 * @author alison
+	 * @param timestamp
+	 * @return String <BR/>
+	 * @exception <BR/>
+	 * @since 1.0.0
+	 */
+	public static String getDateByTimeStamp(long timestamp){
+		if(timestamp != 0){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			String date = sdf.format(timestamp);
+			return date;
+		}else{
+			return "";
+		}
+	}
+	
+	/**
+	 * 将时间戳根据用户需要转换成时间格式
+	 * @author alison
+	 * @param timestamp
+	 * @param format
+	 * @exception <BR/>
+	 * @return String <BR/>
+	 * @since 1.0.0
+	 */
+	public static String getDateByTimeStamp(long timestamp,String format){
+		if(timestamp != 0){
+			SimpleDateFormat sdf = new SimpleDateFormat(format);
+			String date = sdf.format(new Date(timestamp));
+			return date;
+		}else{
+			return "";
+		}
+	}
+	
+	/**
+	 * 将时间字符串转换成时间戳
+	 * 方法名：getTime
+	 * @param user_time
+	 * @author alison
+	 * @throws ParseException
+	 * @return long <BR/>
+	 * @since 1.0.0
+	 */
+	public static long getTime(String user_time){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date date;
+			try {
+				date = sdf.parse(user_time);
+				long timestamp = date.getTime();
+				return timestamp;
+			} catch (java.text.ParseException e) {
+				e.printStackTrace();
+			}
+			return 0L;
+	}
+}

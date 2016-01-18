@@ -1,0 +1,25 @@
+package com.yunpan.dao;
+
+import java.util.List;
+
+import com.yunpan.entity.FileInfo;
+
+/**
+ * 文件操作接口
+ * @author pamgo
+ *
+ */
+public interface IFileInfoDao {
+
+	/**
+	 * 保存用户上传的文件
+	 * @param userid
+	 * @return
+	 */
+	public boolean saveFileInfo(FileInfo fileInfo);
+	
+	/**
+	 * 根据用户id查询所有文件信息
+	 */
+	public List<FileInfo> findListByuserId(int userid);
+}

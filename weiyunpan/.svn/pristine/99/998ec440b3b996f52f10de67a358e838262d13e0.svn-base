@@ -1,0 +1,72 @@
+package com.yunpan.entity;
+/**
+ * 空间大小
+ * @author pamgo
+ * @version v1.0
+ */
+public class DiskInfo {
+	public DiskInfo() {
+	}
+	
+	private int id;
+	
+	private int	disk_userid; //所属用户
+	
+	private long total_size; //总大小
+	
+	private long used_size; //剩余大小
+	
+	private int filenumber; //文件数
+	
+	private String diskuser;
+	
+
+	public String getDiskuser() {
+		return diskuser;
+	}
+
+	public void setDiskuser(String diskuser) {
+		this.diskuser = diskuser;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getDisk_userid() {
+		return disk_userid;
+	}
+
+	public void setDisk_userid(int disk_userid) {
+		this.disk_userid = disk_userid;
+	}
+
+	public long getTotal_size() {
+		return total_size;
+	}
+
+	public void setTotal_size(long total_size) {
+		this.total_size = total_size;
+	}
+
+	public long getUsed_size() {
+		return used_size;
+	}
+
+	public void setUsed_size(long used_size) {
+		this.used_size = used_size;
+	}
+
+	public int getFilenumber() {
+		return filenumber;
+	}
+
+	public void setFilenumber(int filenumber) {
+		this.filenumber = filenumber;
+	}
+	
+}

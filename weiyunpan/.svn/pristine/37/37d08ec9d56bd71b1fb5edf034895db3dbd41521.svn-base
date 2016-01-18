@@ -1,0 +1,153 @@
+package com.yunpan.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.yunpan.dao.IFileInfoDao;
+import com.yunpan.db.DBUtil;
+import com.yunpan.db.IResultSetUtil;
+import com.yunpan.entity.FileInfo;
+/**
+ * 文件信息操作类
+ * @author pamgo
+ *
+ */
+public class FileInfoDaoImpl implements IFileInfoDao {
+
+	/**
+	 * 保存用户上传的文件信息
+	 */
+	@Override
+	public boolean saveFileInfo(FileInfo fileInfo) {
+		String sql = "insert into yp_fileinfo(filename,size,path,created_time,create_user,change_time,show_pic,fileuser) values(?,?,?,?,?,?,?,?)";
+		return DBUtil.executeUpdate(sql, fileInfo.getFilename(),fileInfo.getSize(),fileInfo.getPath(),fileInfo.getCreated_time(),fileInfo.getCreate_user(),fileInfo.getChange_time(),fileInfo.getShow_pic(),fileInfo.getFileuser()) > 0;
+	}
+
+	/**
+	 * 根据用户id获取所有文件信息
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FileInfo> findListByuserId(int userid) {
+		String sql = "select id,filename,size,path,isshare,isfavorite,created_time,create_user,change_time,show_pic from yp_fileinfo where create_user = ?";
+		return (List<FileInfo>) DBUtil.executeQuery(sql, new IResultSetUtil() {
+			List<FileInfo> listFile = new ArrayList<FileInfo>();
+			@Override
+			public Object doHandler(ResultSet rs) throws SQLException {
+				while(rs.next()){
+					FileInfo fileInfo = new FileInfo();
+					fileInfo.setId(rs.getInt(1));
+					fileInfo.setFilename(rs.getString(2));
+					fileInfo.setSize(rs.getLong(3));
+					fileInfo.setPath(rs.getString(4));
+					fileInfo.setIsshare(rs.getInt(5));
+					fileInfo.setIsfavorite(rs.getInt(6));
+					fileInfo.setCreated_time(rs.getLong(7));
+					fileInfo.setCreate_user(rs.getInt(8));
+					fileInfo.setChange_time(rs.getString(9));
+					fileInfo.setShow_pic(rs.getString(10));
+					listFile.add(fileInfo);
+				}
+				return listFile;
+			}
+		}, userid);
+	}
+
+	/**
+	 * 根据文件id查询单个文件信息
+	 */
+	@Override
+	public FileInfo findSimpleFileByid(int fileid) {
+		String sql = "select id,filename,size,path,isshare,isfavorite,created_time,create_user,change_time,show_pic from yp_fileinfo where id = ? ";
+		return (FileInfo) DBUtil.executeQuery(sql,new IResultSetUtil() {
+			
+			@Override
+			public Object doHandler(ResultSet rs) throws SQLException {
+				if(rs.next()){
+					FileInfo fileInfo = new FileInfo();
+					fileInfo.setId(rs.getInt(1));
+					fileInfo.setFilename(rs.getString(2));
+					fileInfo.setSize(rs.getLong(3));
+					fileInfo.setPath(rs.getString(4));
+					fileInfo.setIsshare(rs.getInt(5));
+					fileInfo.setIsfavorite(rs.getInt(6));
+					fileInfo.setCreated_time(rs.getLong(7));
+					fileInfo.setCreate_user(rs.getInt(8));
+					fileInfo.setChange_time(rs.getString(9));
+					fileInfo.setShow_pic(rs.getString(10));
+					return fileInfo;
+				}
+				return null;
+			}
+		}, fileid);
+	}
+	
+	/**
+	 * 根据文件Id跟新文件信息
+	 */
+	@Override
+	public boolean updateFileInfo(FileInfo fileInfo, int fileid) {
+		String sql = "update yp_fileinfo set filename = ?, change_time = ? where id = ?";
+		return DBUtil.executeUpdate(sql,fileInfo.getFilename(),fileInfo.getChange_time(),fileid) > 0;
+	}
+
+	/**
+	 * 根据用户id以及文件名查询文件信息
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FileInfo> findListByfilename(int userid, String filename) {
+		String sql = "select id,filename,size,path,isshare,isfavorite,created_time,create_user,change_time,show_pic from yp_fileinfo where create_user = ? and filename like ?";
+		return (List<FileInfo>) DBUtil.executeQuery(sql, new IResultSetUtil() {
+			List<FileInfo> listFile = new ArrayList<FileInfo>();
+			@Override
+			public Object doHandler(ResultSet rs) throws SQLException {
+				while(rs.next()){
+					FileInfo fileInfo = new FileInfo();
+					fileInfo.setId(rs.getInt(1));
+					fileInfo.setFilename(rs.getString(2));
+					fileInfo.setSize(rs.getLong(3));
+					fileInfo.setPath(rs.getString(4));
+					fileInfo.setIsshare(rs.getInt(5));
+					fileInfo.setIsfavorite(rs.getInt(6));
+					fileInfo.setCreated_time(rs.getLong(7));
+					fileInfo.setCreate_user(rs.getInt(8));
+					fileInfo.setChange_time(rs.getString(9));
+					fileInfo.setShow_pic(rs.getString(10));
+					listFile.add(fileInfo);
+				}
+				return listFile;
+			}
+		}, userid,"%"+filename+"%");
+	}
+
+	/**
+	 * 根据文件id删除文件
+	 */
+	@Override
+	public boolean deleteFileByid(int fileid) {
+		String sql = "delete from yp_fileinfo where id = ?";
+		return DBUtil.executeUpdate(sql, fileid) > 0;
+	}
+
+	/**
+	 * 根据文件名查询文件path
+	 */
+	@Override
+	public String findPathByFilename(String filename) {
+		String sql = "select path from yp_fileinfo where filename = ?";
+		return DBUtil.executeQuery(sql, filename).toString();
+	}
+
+	/**
+	 * 根据文件id查询用户id
+	 */
+	@Override
+	public int findUseridByFileid(int fileid) {
+		String sql ="select create_user from yp_fileinfo where id = ?";
+		return Integer.parseInt(DBUtil.executeQuery(sql, fileid).toString());
+	}
+
+}

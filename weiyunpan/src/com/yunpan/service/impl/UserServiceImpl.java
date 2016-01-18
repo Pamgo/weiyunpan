@@ -1,0 +1,71 @@
+package com.yunpan.service.impl;
+
+import com.yunpan.dao.IUserDao;
+import com.yunpan.dao.impl.UserDaoImpl;
+import com.yunpan.service.IUserService;
+
+/**
+ * 用户操作业务接口实现类
+ * @author pamgo
+ *
+ */
+public class UserServiceImpl implements IUserService {
+
+	/**
+	 * 用户登录
+	 * result: 1代表用户名错误；2代表密码错误；3代表正确
+	 */
+	@Override
+	public String login(String username, String password) {
+		IUserDao userDao = new UserDaoImpl();
+		return userDao.login(username, password);
+	}
+
+	/**
+	 * 根据用户查询用户id
+	 */
+	@Override
+	public Integer getUserIdByUsername(String username) {
+		IUserDao userDao = new UserDaoImpl();
+		return userDao.getUserIdByUsername(username);
+	}
+
+	/**
+	 * 通过邮箱和用户名验证用户是否存在
+	 * return 1:代表存在；2代表不存在
+	 */
+	@Override
+	public String confirm(String email, String username) {
+		IUserDao userDao = new UserDaoImpl();
+		return userDao.confirm(email, username);
+	}
+
+	/**
+	 * 验证用户名是否可用
+	 * return 1:代表可用；2:代表不可用
+	 */
+	@Override
+	public String confirmUsername(String username) {
+		IUserDao userDao = new UserDaoImpl();
+		return userDao.confirmUsername(username);
+	}
+
+	/**
+	 * 根据用户id查询用户名
+	 */
+	@Override
+	public String getUserNameByUserid(int userid) {
+		IUserDao userDao = new UserDaoImpl();
+		return userDao.getUserNameByUserid(userid);
+	}
+
+	/**
+	 * 根据用户名查询用户身份
+	 */
+	@Override
+	public String findRoleByUsername(String username) {
+		IUserDao userDao = new UserDaoImpl();
+		return userDao.findRoleByUsername(username);
+	}
+
+}

@@ -1,0 +1,18 @@
+package com.yunpan.util;
+/**
+ * 常量
+ * @author pamgo
+ *
+ */
+public class ConstantUtils {
+
+	public static final long INITSIZE = 1024*1024*1024; //初始化网盘大小
+	
+	public static final long UPLOAD_FILE_SIZE = 1024 * 1024;	// 1k
+	
+	public static final long UPLOAD_MAX_FILE_SIZE = 1024*1024*1024; // 1M
+	
+	public static final String UPLOAD_FILE_TYPE = "txt,jpg,gif,png"; //允许上传文件类型
+	
+	public static final String DENIED_File_TYPE = "rar,jsp,js";
+}

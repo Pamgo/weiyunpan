@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+.login-box{
+	margin: 0 auto;
+	top:156px;
+}
+ .signup-box{
+	margin: 0 auto;
+	top:156px;
+}
+.forgot-box {
+	margin: 0 auto;
+	top:156px;
+}

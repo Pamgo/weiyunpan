@@ -1,0 +1,37 @@
+package com.yunpan.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.yunpan.dao.IUserDao;
+import com.yunpan.db.DBUtil;
+import com.yunpan.db.IResultSetUtil;
+import com.yunpan.entity.User;
+
+/**
+ * 使用用户操作的接口类
+ * @author pamgo
+ *
+ */
+public class UserDaoImpl implements IUserDao {
+
+	/**
+	 * 用户登录
+	 * result: 1代表用户名错误；2代表密码错误；3代表正确
+	 */
+	@Override
+	public String login(String username, String password) {
+		String sql = "select password from users where username = ?";
+		Object result = DBUtil.executeQuery(sql,username);
+		if(result == null){
+			return "1";
+		}else{
+			if(result.toString().equals(password)){
+				return "3";
+			}else{
+				return "2";
+			}
+		}
+	}
+
+}

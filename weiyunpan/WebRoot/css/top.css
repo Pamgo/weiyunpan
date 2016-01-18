@@ -1,0 +1,59 @@
+
+.content {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+
+.top {
+	width: 100%;
+	height: 50px;
+	background: #252525;
+	box-shadow: 0px 1px 5px 1px #000;
+	left: 0;  
+	position: fixed;  
+	top: 0;  
+	z-index: 1000; 
+}
+
+.navs {
+	width: 100%;
+	height: 50px;
+}
+
+.navs .navs_logo {
+	float: left;
+	color: white;
+	display: inline-block;
+	line-height: 49px;
+	font-size: 18px;
+	padding-left: 13px;
+	text-decoration: none;
+	height: 50px;
+	width: 80px;
+}
+
+.navs_logo:hover {
+	background-color: #0f0f0f;
+}
+
+.logo {
+	float: left;
+	text-decoration: none;
+}
+
+.separate {
+	padding-left: 16px;
+}
+
+.top .t_logo {
+	margin-left: 10px;
+	display: inline;
+}
+
+.top .t_logo .t_logo_font {
+	font-size: 24px;
+	color: white;
+	line-height: 50px;
+	padding-left: 39px;
+}

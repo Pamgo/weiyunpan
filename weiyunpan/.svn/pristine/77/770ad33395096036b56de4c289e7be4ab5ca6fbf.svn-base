@@ -1,0 +1,18 @@
+package com.yunpan.service;
+
+import com.yunpan.entity.User;
+
+/**
+ * 用户操作业务接口
+ * @author pamgo
+ *
+ */
+public interface IUserService {
+	/**
+	 * 用户登录
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public String login(String username,String password);
+}

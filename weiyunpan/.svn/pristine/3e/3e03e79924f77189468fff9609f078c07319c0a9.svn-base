@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<!-- 配置登录页面 -->
+	<context-param>
+		<param-name>login_page</param-name>
+		<param-value>/login.jsp</param-value>
+	</context-param>
+
+	<!-- 配置需要登录才能操作的页面路径 -->
+	<context-param>
+		<param-name>validate_page</param-name>
+		<param-value>/FileFavoriteServlet.do,/jsps/shareForward.jsp,/FileShareServlet.do,/FileDownloadServlet.do,/FileHandleServlet.do,/RedirectBase.do,/FileUploadServlet.do,/jsps/main.jsp,/jsps/pic.jsp,/favorite.jsp,/jsps/myshare.jsp,/jsps/sharemain.jsp,/jsps/wangpan.jsp,/jsps/xgfile.jsp,/own_setting.jsp</param-value>
+	</context-param>
+
+	<!-- 配置不需要登录就能访问的页面 -->
+	<context-param>
+		<param-name>common_page</param-name>
+		<param-value>/index.jsp,/login.jsp,/UserServlet.do,/RegisterServlet.do</param-value>
+	</context-param>
+
+	<filter>
+		<filter-name>validateLoginFilter</filter-name>
+		<filter-class>com.yunpan.filter.ValidateLoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>validateLoginFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>validateLoginFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+
+
+	<!-- 用户操作控制类 -->
+	<servlet>
+		<servlet-name>UserServlet</servlet-name>
+		<servlet-class>com.yunpan.controller.UserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/UserServlet.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>RegisterServlet</servlet-name>
+		<servlet-class>com.yunpan.controller.RegisterServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RegisterServlet</servlet-name>
+		<url-pattern>/RegisterServlet.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FileUploadServlet</servlet-name>
+		<servlet-class>com.yunpan.controller.FileUploadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FileUploadServlet</servlet-name>
+		<url-pattern>/FileUploadServlet.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>RedirectBase</servlet-name>
+		<servlet-class>com.yunpan.controller.RedirectBase</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RedirectBase</servlet-name>
+		<url-pattern>/RedirectBase.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FileHandleServlet</servlet-name>
+		<servlet-class>com.yunpan.controller.FileHandleServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FileHandleServlet</servlet-name>
+		<url-pattern>/FileHandleServlet.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FileDownloadServlet</servlet-name>
+		<servlet-class>com.yunpan.controller.FileDownloadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FileDownloadServlet</servlet-name>
+		<url-pattern>/FileDownloadServlet.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FileShareServlet</servlet-name>
+		<servlet-class>com.yunpan.controller.FileShareServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FileShareServlet</servlet-name>
+		<url-pattern>/FileShareServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>FileFavoriteServlet</servlet-name>
+		<servlet-class>com.yunpan.controller.FileFavoriteServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FileFavoriteServlet</servlet-name>
+		<url-pattern>/FileFavoriteServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 配置编码方式Filter -->
+	<filter>
+		<filter-name>charsetEncoding</filter-name>
+		<filter-class>com.yunpan.filter.CharsetEncodingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>charsetEncoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+	<display-name></display-name>
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

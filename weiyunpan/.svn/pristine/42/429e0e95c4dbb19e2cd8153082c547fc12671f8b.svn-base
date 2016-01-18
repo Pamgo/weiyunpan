@@ -1,0 +1,19 @@
+package com.yunpan.dao;
+
+import com.yunpan.entity.User;
+
+/**
+ * 用户管理DAO接口
+ * @author pamgo
+ *
+ */
+public interface IUserDao {
+	
+	/**
+	 * 用户登录
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public String login(String username,String password);
+}

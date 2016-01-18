@@ -1,0 +1,38 @@
+package com.yunpan.util;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+/**
+ * 获取文件目录工具类
+ * @author pamgo
+ * @version 1.0
+ */
+public class FileStorage {
+
+	/**
+	 * 获得文件的真是目录
+	 * @return
+	 */
+	public static String getRealPath(){
+		
+		return getProperties().getProperty("file_path");
+	}
+	
+	
+	/**
+	 * 获得配置文件的信息
+	 * @return
+	 */
+	private static Properties getProperties(){
+		InputStream input = FileStorage.class.getClassLoader().getResourceAsStream("storage.properties");
+		Properties props = new Properties();
+		try {
+			props.load(input);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return props;
+	}
+}

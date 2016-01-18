@@ -1,0 +1,55 @@
+package com.yunpan.dao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.yunpan.dao.IFileInfoDao;
+import com.yunpan.db.DBUtil;
+import com.yunpan.db.IResultSetUtil;
+import com.yunpan.entity.FileInfo;
+/**
+ * 文件信息操作类
+ * @author pamgo
+ *
+ */
+public class FileInfoDaoImpl implements IFileInfoDao {
+
+	/**
+	 * 保存用户上传的文件信息
+	 */
+	@Override
+	public boolean saveFileInfo(FileInfo fileInfo) {
+		String sql = "insert into yp_fileinfo(filename,size,path,created_time,create_user) values(?,?,?,?,?)";
+		return DBUtil.executeUpdate(sql, fileInfo.getFilename(),fileInfo.getSize(),fileInfo.getPath(),fileInfo.getCreated_time(),fileInfo.getCreate_user()) > 0;
+	}
+
+	/**
+	 * 根据用户id获取所有文件信息
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FileInfo> findListByuserId(int userid) {
+		String sql = "select filename,size,path,isshare,isfavorite,created_time,create_user from yp_fileinfo where create_user = ?";
+		return (List<FileInfo>) DBUtil.executeQuery(sql, new IResultSetUtil() {
+			List<FileInfo> listFile = new ArrayList<FileInfo>();
+			@Override
+			public Object doHandler(ResultSet rs) throws SQLException {
+				while(rs.next()){
+					FileInfo fileInfo = new FileInfo();
+					fileInfo.setFilename(rs.getString(1));
+					fileInfo.setSize(rs.getLong(2));
+					fileInfo.setPath(rs.getString(3));
+					fileInfo.setIsshare(rs.getInt(4));
+					fileInfo.setIsfavorite(rs.getInt(5));
+					fileInfo.setCreated_time(rs.getLong(6));
+					fileInfo.setCreate_user(rs.getInt(7));
+					listFile.add(fileInfo);
+				}
+				return listFile;
+			}
+		}, userid);
+	}
+
+}

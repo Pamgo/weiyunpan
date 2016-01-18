@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<!-- 用户操作控制类 -->
+	<servlet>
+		<servlet-name>UserServlet</servlet-name>
+		<servlet-class>com.yunpan.controller.UserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/UserServlet.do</url-pattern>
+	</servlet-mapping>
+	<!-- 配置编码方式Filter-->
+	<filter>
+		<filter-name>charsetEncoding</filter-name>
+		<filter-class>com.yunpan.filter.CharsetEncodingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>charsetEncoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	
+	<display-name></display-name>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

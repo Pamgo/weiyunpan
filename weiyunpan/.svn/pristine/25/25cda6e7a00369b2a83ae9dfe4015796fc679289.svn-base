@@ -1,0 +1,154 @@
+package com.yunpan.controller;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.jspsmart.upload.Files;
+import com.jspsmart.upload.SmartUpload;
+import com.yunpan.entity.DiskInfo;
+import com.yunpan.entity.FileInfo;
+import com.yunpan.entity.FoldlerInfo;
+import com.yunpan.service.IDiskInfoService;
+import com.yunpan.service.IFileInfoService;
+import com.yunpan.service.IFoldlerInfoService;
+import com.yunpan.service.IUserService;
+import com.yunpan.service.impl.DiskInfoServiceImpl;
+import com.yunpan.service.impl.FileInfoServiceImpl;
+import com.yunpan.service.impl.FoldlerInfoServiceImpl;
+import com.yunpan.service.impl.UserServiceImpl;
+import com.yunpan.util.BaseServlet;
+import com.yunpan.util.ConstantUtils;
+import com.yunpan.util.FileStorage;
+import com.yunpan.util.StringHelper;
+
+public class FileUploadServlet extends BaseServlet {
+	private static final long serialVersionUID = -6356484590690885787L;
+
+	public void uploadFile(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("uploadfile");
+		// 根据查询用户所属的文件夹
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
+		String username = session.getAttribute("username").toString();
+		IUserService userService = new UserServiceImpl();
+		Integer userid = userService.getUserIdByUsername(username);
+		IFoldlerInfoService foldlerInfoService = new FoldlerInfoServiceImpl();
+		FoldlerInfo foldlerInfo = foldlerInfoService.findByUserName(userid
+				.intValue());
+		String folderName = foldlerInfo.getFoldername();
+		// 设置上传文件保存路径
+		String filePath = FileStorage.getFileRealPath() + "/" + folderName;
+		File file = new File(filePath);
+		if (!file.exists()) {
+			file.mkdir();
+		}
+
+		SmartUpload su = new SmartUpload();
+		// 初始化对象
+		su.initialize(getServletConfig(), request, response);
+		// 设置上传文件大小
+		su.setMaxFileSize(ConstantUtils.UPLOAD_FILE_SIZE);
+		// 设置所有文件的大小
+		su.setTotalMaxFileSize(ConstantUtils.UPLOAD_MAX_FILE_SIZE);
+		// 设置允许上传文件类型
+		su.setAllowedFilesList(ConstantUtils.UPLOAD_FILE_TYPE);
+		String result = "上传成功！";
+		// 设置禁止上传的文件类型
+		try {
+			su.setDeniedFilesList(ConstantUtils.DENIED_File_TYPE);
+			// 上传文件
+			su.upload();
+			// 保存上传文件信息（路径，文件名称，所属人）
+			IFileInfoService fileInfoService = new FileInfoServiceImpl();
+			List<FileInfo> listFile = fileInfoService.findListByuserId(userid.intValue());
+			Files files = su.getFiles();
+			for (int i = 0; i < files.getCount(); i++) {
+				String filename = files.getFile(i).getFileName();
+				//判断是否重名
+				for(FileInfo fileInfo : listFile){
+					if(filename.equals(fileInfo.getFilename())){
+						//如果文件名相同，更改文件名
+						filename = "("+i+")" + filename ;
+					}
+				}
+				//这里有bug，为什么会只获取到文件名
+				String filepath = files.getFile(i).getFilePathName();
+				int fileSize = files.getFile(i).getSize();
+				// 把文件信息存到数据库中
+				FileInfo fileInfo = new FileInfo();
+				fileInfo.setFilename(filename);
+				fileInfo.setSize(fileSize);
+				fileInfo.setPath(filepath);
+				fileInfo.setCreated_time(StringHelper.getCurrentTimeStamp());
+				fileInfo.setCreate_user(userid);
+				fileInfo.setChange_time(StringHelper.getCurrentFormatDate());
+				//存的时候顺便把要显示的图标的名称以其存到数据库中
+				if(filepath.endsWith("png")||filepath.endsWith("jpg")){
+					fileInfo.setShow_pic("zly.jpg");
+				}else if(filepath.endsWith("txt")){
+					fileInfo.setShow_pic("file.png");
+				}else if(filePath.endsWith("zip")){
+					fileInfo.setShow_pic("zip7.png");
+				}else{
+					fileInfo.setShow_pic("doc_files.png");
+				}
+				fileInfo.setFileuser(username);
+				//更新文件信息
+				fileInfoService.saveFileInfo(fileInfo);
+			}
+			// 更新网盘信息
+			int fileCount = files.getCount(); // 取得上传文件数目
+			long allSize = files.getSize(); // 取得上传文件的总大小
+			IDiskInfoService diskInfoService = new DiskInfoServiceImpl();
+			DiskInfo diskInfo = diskInfoService.load(userid.intValue());
+			// 判断是否满,获取上传前的网盘已使用的空间
+			long used_size = diskInfo.getUsed_size();
+			if ((used_size + allSize) <= ConstantUtils.INITSIZE) {
+				// 对文件数进行更新
+				int count = su.save(filePath);
+				int fCount = diskInfo.getFilenumber();
+				boolean isupdatedisk = diskInfoService.updateDiskSize(allSize
+						+ used_size, fCount + fileCount, userid.intValue());
+				if (isupdatedisk) {
+					// 更新成功,获取剩余空间大小，保存
+					long leftsize = diskInfo.getTotal_size()/1024 - diskInfo.getUsed_size();
+					
+					//保存总文件数
+					int filenumber = fCount + fileCount;
+					request.setAttribute("filenumber", filenumber);
+					//保存剩余空间
+					request.setAttribute("leftsize", leftsize);
+					System.out.println("上传成功！" + count);
+				}
+			} else {
+				// 网盘已满
+				System.out.println("网盘已满");
+				result = "网盘已满,不允许上传!请联系管理员...";
+			}
+
+		} catch (Exception e) {
+			result = "上传失败！";
+			if (e.getMessage().indexOf("1015") != -1) {
+				result = "上传失败:上传文件类型不正确！";
+			} else if (e.getMessage().indexOf("1010") != -1) {
+				result = "上传失败:上传文件类型不正确！";
+			} else if (e.getMessage().indexOf("1105") != -1) {
+				result = "上传失败:上传文件大小大于允许上传的最大值！";
+			} else if (e.getMessage().indexOf("1110") != -1) {
+				result = "上传失败:上传文件总大小大于允许上传总大小的最大值！";
+			}
+			e.printStackTrace();
+		}
+		request.setAttribute("result", result);
+		request.getRequestDispatcher("jsps/pic.jsp").forward(request, response);
+	}
+
+}

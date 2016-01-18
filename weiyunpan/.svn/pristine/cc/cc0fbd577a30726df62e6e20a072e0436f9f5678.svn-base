@@ -1,0 +1,6 @@
+#the upload file will store here
+file_path=weiyunpan/files
+fileReal_path=F\:/weiyunpan/File/files/
+image_path=weiyunpan/images/
+imageReal_path=F\:/weiyunpan/File/images/
+
