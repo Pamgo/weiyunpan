@@ -40,7 +40,7 @@
 		</ul>
 		<ul class="menu-list">
 			<li class="menu-item basic-link on">
-			<a href="#" class="item-info">上传下载限制</a>
+			<a href="<%=path %>/UploadAndDownLimit.do?method=limitFind" class="item-info">上传下载限制</a>
 			</li>
 		</ul>
 	</div>

@@ -3,7 +3,6 @@ package com.yunpan.service;
 import java.util.List;
 
 import com.yunpan.entity.DiskInfo;
-import com.yunpan.entity.FileInfo;
 
 /**
  * 网盘空间操作类

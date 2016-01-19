@@ -80,7 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<li class="menu-item basic-link on"><a href="<%=path%>/FileHandleServlet.do?method=findAllFile" class="item-info">文件管理</a></li>
 							</ul>
 							<ul class="menu-list">
-								<li class="menu-item basic-link on"><a href="#" class="item-info">上传下载限制</a></li>
+								<li class="menu-item basic-link on"><a href="<%=path %>/UploadAndDownLimit.do?method=limitFind" class="item-info">上传下载限制</a></li>
 							</ul>
 						</div>
 						<div class="settting-detail">

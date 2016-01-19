@@ -13,7 +13,7 @@
 	<!-- 配置需要登录才能操作的页面路径 -->
 	<context-param>
 		<param-name>validate_page</param-name>
-		<param-value>/DiskHandleServlet.do,/space.jsp,/jsps/admin/fileinfo.jsp,/FileFavoriteServlet.do,/jsps/shareForward.jsp,/FileShareServlet.do,/FileDownloadServlet.do,/FileHandleServlet.do,/RedirectBase.do,/FileUploadServlet.do,/jsps/main.jsp,/jsps/pic.jsp,/favorite.jsp,/jsps/myshare.jsp,/jsps/sharemain.jsp,/jsps/wangpan.jsp,/jsps/xgfile.jsp,/own_setting.jsp,/jsps/admin/settingleft.jsp,/jsps/admin/settinghead.jsp,/jsps/admin/space.jsp,/jsps/admin/limit.jsp,/jsps/admin/adminIndex.jsp</param-value>
+		<param-value>/UploadAndDownLimit.do,/DiskHandleServlet.do,/space.jsp,/jsps/admin/fileinfo.jsp,/FileFavoriteServlet.do,/jsps/shareForward.jsp,/FileShareServlet.do,/FileDownloadServlet.do,/FileHandleServlet.do,/RedirectBase.do,/FileUploadServlet.do,/jsps/main.jsp,/jsps/pic.jsp,/favorite.jsp,/jsps/myshare.jsp,/jsps/sharemain.jsp,/jsps/wangpan.jsp,/jsps/xgfile.jsp,/own_setting.jsp,/jsps/admin/settingleft.jsp,/jsps/admin/settinghead.jsp,/jsps/admin/space.jsp,/jsps/admin/limit.jsp,/jsps/admin/adminIndex.jsp</param-value>
 	</context-param>
 
 	<!-- 配置不需要登录就能访问的页面 -->
@@ -116,6 +116,15 @@
 	<servlet-mapping>
 		<servlet-name>DiskHandleServlet</servlet-name>
 		<url-pattern>/DiskHandleServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>UploadAndDownLimit</servlet-name>
+		<servlet-class>com.yunpan.controller.UploadAndDownLimit</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UploadAndDownLimit</servlet-name>
+		<url-pattern>/UploadAndDownLimit.do</url-pattern>
 	</servlet-mapping>
 	
 	<!-- 配置编码方式Filter -->

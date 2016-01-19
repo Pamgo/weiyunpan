@@ -63,76 +63,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<body>
 		<div id="wrap">
-			<div class="head">
-				<div class="mod-head">
-					<a href="../index.html"><img src="../img/zly.jpg" alt="导航开始" width="35px" height="35px" />
-						<span class="span_wy">微云</span>
-					</a>
-				</div>
-				<div class="mod-userbar">
-					管理员：<span>pamgo</span>
-				</div>
-			</div>
+			<jsp:include page="settinghead.jsp"></jsp:include>
 			<div class="br"></div>
 			<div id="content">
 				<div class="mod-setting">
 					<div class="setting-title">云盘设置</div>
 					<div class="setting-content">
-						<div class="setting-menu">
-							<div class="memu-title">
-								<h3>设置类型</h3>
-							</div>
-							<ul class="menu-list">
-								<li class="menu-item basic-link on"><a href="#" class="item-info">分配空间</a></li>
-							</ul>
-							<ul class="menu-list">
-								<li class="menu-item basic-link on"><a href="#" class="item-info">文件管理</a></li>
-							</ul>
-							<ul class="menu-list">
-								<li class="menu-item basic-link on"><a href="#" class="item-info">上传下载限制</a></li>
-							</ul>
-						</div>
+						<jsp:include page="settingleft.jsp"></jsp:include>
 						<div class="settting-detail">
 							<div class="mod-setting-jbxx">
 								<div class="mod-title">文件信息</div>
-									<table class="main setting-table" width="600" border="0" cellspacing="1" bgcolor="#666666">
-										<tr class="title">
-											<td bgcolor="#CCCCCC">上&nbsp;传&nbsp;者</td>
-											<td bgcolor="#CCCCCC">文件大小</td>
-											<td bgcolor="#CCCCCC">创建时间</td>
-											<td bgcolor="#CCCCCC">文件名称</td>
-											<td bgcolor="#CCCCCC">文件操作</td>
-										</tr>
-										<tr>
-											<td bgcolor="#FFFFFF">李百（L）</td>
-											<td bgcolor="#FFFFFF">15.2</td>
-											<td bgcolor="#FFFFFF">1988</td>
-											<td bgcolor="#FFFFFF">9aaa</td>
-											<td bgcolor="#FFFFFF"><a id="f_delete" class="c_delete" title="删除">删除</a></td>
-										</tr>
-										<tr>
-											<td bgcolor="#FFFFFF">王易(W)</td>
-											<td bgcolor="#FFFFFF">25.55</td>
-											<td bgcolor="#FFFFFF">2000</td>
-											<td bgcolor="#FFFFFF">dd</td>
-											<td bgcolor="#FFFFFF"><a id="f_delete" class="c_delete" title="删除">删除</a></td>
-										</tr>
-										<tr>
-											<td bgcolor="#FFFFFF">林明(L)</td>
-											<td bgcolor="#FFFFFF">18.66</td>
-											<td bgcolor="#FFFFFF">1745</td>
-											<td bgcolor="#FFFFFF">ee</td>
-											<td bgcolor="#FFFFFF"><a id="f_delete" class="c_delete" title="删除">删除</a></td>
-										</tr>
-										<tr>
-											<td bgcolor="#FFFFFF">李姐(L)</td>
-											<td bgcolor="#FFFFFF">20</td>
-											<td bgcolor="#FFFFFF">1996</td>
-											<td bgcolor="#FFFFFF">1r</td>
-											<td bgcolor="#FFFFFF"><a id="f_delete" class="c_delete" title="删除">删除</a></td>
-										</tr>
-									</table>
-									<div class="none"></div>
+								<div class="limit_input">
+									上传限制
+								</div>	
+								
 							</div>
 						</div>
 					</div>
@@ -141,51 +85,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 
 		</div>
-		<script src="../js/jquery-1.8.0.min.js" type="text/javascript"></script>
+		<script src="<%=path %>/js/jquery-1.8.0.min.js" type="text/javascript"></script>
 		<script type="text/javascript">
 			$(function() {	
-				var pk = 1;
-				$("tr.title td").click(function() {
-					//把要排序的内容添加到数组里
-					var tIndex = parseInt($(this).index()); //获取td的位置值
-					var valueArray = new Array();  //创建一个数组用于村粗内容
-					var p = 0;
-					for (var i = 1; i < $("table tr").length; i++) {
-						if (tIndex != 0) {
-							valueArray[p] = parseInt($("table tr:eq(" + i + ") td").eq(tIndex).html());
-						} else {
-							valueArray[p] = $("table tr:eq(" + i + ") td").eq(tIndex).html();
-						}
-						p++;
-					}
-					
-					//数据排序
-					if (pk == 1) {
-						valueArray.sort(function(a, b) {
-							return a < b ? -1 : 1
-						})
-						pk = 2
-					} else {
-						valueArray.sort(function(a, b) {
-							return a > b ? -1 : 1
-						})
-						pk = 1
-					}
-					//匹配内容加入到一个隐藏的排序div里+-
-					for (var i = 0; i < valueArray.length; i++) {
-						for (var d = 1; d < $("table tr").length; d++) {
-							var valueText = tIndex != 0 ? parseInt($("table tr:eq(" + d + ") td").eq(tIndex).html()) : $("table tr:eq(" + d + ") td").eq(tIndex).html();
-							if (valueArray[i] == valueText) {
-								$("table tr").eq(d).clone().appendTo(".none")
-							}
-						}
-					}
-					//重新整理html 排序，添加到视图里
-					var titleClone = $("table tr").eq(0).clone(true);
-					$("table").html("").append(titleClone);
-					$("table").append($(".none").html())
-					$(".none").html("");
-				})
 			})
 		</script>
 	</body>
