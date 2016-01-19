@@ -51,7 +51,7 @@ public class FileUploadServlet extends BaseServlet {
 
 		SmartUpload su = new SmartUpload();
 		
-		//后期将会以配置文件的形式配置一下信息
+		//后期将会以配置文件的形式配置以下信息
 		// 初始化对象
 		su.initialize(getServletConfig(), request, response);
 		// 设置上传文件大小
