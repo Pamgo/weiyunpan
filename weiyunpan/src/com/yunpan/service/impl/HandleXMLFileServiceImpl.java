@@ -20,9 +20,9 @@ public class HandleXMLFileServiceImpl implements IHandleXMLFileService {
 	 * @throws Exception 
 	 */
 	@Override
-	public List<FileLimit> parseXMLtoLimit() throws Exception {
+	public List<FileLimit> parseXMLtoLimit(String path) throws Exception {
 		IHandleXMLFileDao handleXMLFileDao = new HandleXMLFileDaoImpl();
-		return handleXMLFileDao.parseXMLtoLimit();
+		return handleXMLFileDao.parseXMLtoLimit(path);
 	}
 
 	/**
@@ -34,10 +34,10 @@ public class HandleXMLFileServiceImpl implements IHandleXMLFileService {
 	 * @throws Exception 
 	 */
 	@Override
-	public void updateFileLimit(String fileSize, String allfileSize,
-			String allowType, String bannedType) throws Exception {
+	public void updateFileLimit(long fileSize, long allfileSize,
+			String allowType, String bannedType,String path) throws Exception {
 		IHandleXMLFileDao handleXMLFileDao = new HandleXMLFileDaoImpl();
-		handleXMLFileDao.updateFileLimit(fileSize, allfileSize, allowType, bannedType);
+		handleXMLFileDao.updateFileLimit(fileSize, allfileSize, allowType, bannedType,path);
 	}
 
 }

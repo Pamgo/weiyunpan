@@ -15,7 +15,7 @@ public interface IHandleXMLFileDao {
 	 * 解析xml文件内容到实体类中
 	 * @return
 	 */
-	public List<FileLimit> parseXMLtoLimit() throws Exception;
+	public List<FileLimit> parseXMLtoLimit(String path) throws Exception;
 	
 	/**
 	 * 更新xml文件内容
@@ -24,5 +24,5 @@ public interface IHandleXMLFileDao {
 	 * @param allowType
 	 * @param bannedType
 	 */
-	public void updateFileLimit(String fileSize,String allfileSize,String allowType,String bannedType) throws Exception;
+	public void updateFileLimit(long fileSize,long allfileSize,String allowType,String bannedType,String path) throws Exception;
 }

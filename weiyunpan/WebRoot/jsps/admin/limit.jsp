@@ -9,7 +9,7 @@
 <html>
 
 <head>
-<title>微云</title>
+<title>微云文件限制</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -279,13 +279,14 @@
 						<div class="mod-setting-jbxx">
 							<div class="mod-title">参数设置</div>
 							<div class="table-limit">
-								<form action="#" method="post">
+								<form action="<%=path %>/UploadAndDownLimit.do" method="post">
+								<input type="hidden" name="method" value="limitUpdate" />
 									<table class="limit-main">
 										<tbody>
 											<tr>
 												<td class="td-title">上传文件大小&nbsp;:</td>
 												<td><input class="limit-input" type="text"
-													name="fileSize" value="" />
+													name="fileSize" value="${fileLimit.fileSize/(1024*1024) }" />
 												</td>
 												<td><span>*</span><em>KB(单位)</em>
 												</td>
@@ -293,23 +294,23 @@
 											<tr>
 												<td class="td-title">所有文件大小&nbsp;:</td>
 												<td><input class="limit-input" type="text"
-													name="allfileSize" value="" />
+													name="allfileSize" value="${fileLimit.allfileSize/(1024*1024*1024) }" />
 												</td>
 												<td><span>*</span><em>M(单位)</em>
 												</td>
 											</tr>
 											<tr>
 												<td class="td-title">允许上传文件类型&nbsp;:</td>
-												<td><textarea name="fileType" value=""
-														style="max-height: 100px;margin-left: 14px;font-size: 14px;padding: 1px 8px;"></textarea>
+												<td><textarea name="fileType"
+														style="max-height: 100px;margin-left: 14px;font-size: 14px;padding: 1px 8px;">${fileLimit.fileType }</textarea>
 												</td>
 												<td><span>*</span><em>以逗号隔开</em>
 												</td>
 											</tr>
 											<tr>
 												<td class="td-title">禁止上传文件类型&nbsp;:</td>
-												<td><textarea name="deniedType" value=""
-														style="max-height: 100px;margin-left: 14px;font-size: 14px;padding: 1px 8px;"></textarea>
+												<td><textarea name="deniedType"
+														style="max-height: 100px;margin-left: 14px;font-size: 14px;padding: 1px 8px;">${fileLimit.deniedType}</textarea>
 												</td>
 												<td><span>*</span><em>以逗号隔开</em>
 												</td>

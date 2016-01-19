@@ -16,7 +16,7 @@ public interface IHandleXMLFileService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public List<FileLimit> parseXMLtoLimit() throws Exception;
+	public List<FileLimit> parseXMLtoLimit(String path) throws Exception;
 	
 	/**
 	 * 更新xml文件内容
@@ -26,5 +26,5 @@ public interface IHandleXMLFileService {
 	 * @param bannedType
 	 * @throws Exception 
 	 */
-	public void updateFileLimit(String fileSize,String allfileSize,String allowType,String bannedType) throws Exception;
+	public void updateFileLimit(long fileSize,long allfileSize,String allowType,String bannedType,String path) throws Exception;
 }
