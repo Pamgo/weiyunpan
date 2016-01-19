@@ -288,7 +288,7 @@
 												<td><input class="limit-input" type="text"
 													name="fileSize" value="${fileLimit.fileSize/(1024*1024) }" />
 												</td>
-												<td><span>*</span><em>KB(单位)</em>
+												<td><span>*</span><em>KB(单位[整型])</em>
 												</td>
 											</tr>
 											<tr>
@@ -296,7 +296,7 @@
 												<td><input class="limit-input" type="text"
 													name="allfileSize" value="${fileLimit.allfileSize/(1024*1024*1024) }" />
 												</td>
-												<td><span>*</span><em>M(单位)</em>
+												<td><span>*</span><em>M(单位[整型])</em>
 												</td>
 											</tr>
 											<tr>
@@ -304,7 +304,7 @@
 												<td><textarea name="fileType"
 														style="max-height: 100px;margin-left: 14px;font-size: 14px;padding: 1px 8px;">${fileLimit.fileType }</textarea>
 												</td>
-												<td><span>*</span><em>以逗号隔开</em>
+												<td><span>*</span><em>以英文逗号隔开</em>
 												</td>
 											</tr>
 											<tr>
@@ -312,7 +312,7 @@
 												<td><textarea name="deniedType"
 														style="max-height: 100px;margin-left: 14px;font-size: 14px;padding: 1px 8px;">${fileLimit.deniedType}</textarea>
 												</td>
-												<td><span>*</span><em>以逗号隔开</em>
+												<td><span>*</span><em>以英文逗号隔开</em>
 												</td>
 											</tr>
 											<tr>

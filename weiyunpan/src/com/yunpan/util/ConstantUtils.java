@@ -8,7 +8,7 @@ public class ConstantUtils {
 
 	public static final long INITSIZE = 1024*1024*1024; //初始化网盘大小
 	
-	public static final long UPLOAD_FILE_SIZE = 1024 * 1024;	// 1kB
+	public static final long UPLOAD_FILE_SIZE = 1024 * 1024*500;	// 1kB
 	
 	public static final long UPLOAD_MAX_FILE_SIZE = 1024*1024*1024; // 1M
 	

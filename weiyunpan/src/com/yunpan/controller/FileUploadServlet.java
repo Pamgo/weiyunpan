@@ -9,18 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.jspsmart.upload.Files;
 import com.jspsmart.upload.SmartUpload;
 import com.yunpan.entity.DiskInfo;
 import com.yunpan.entity.FileInfo;
+import com.yunpan.entity.FileLimit;
 import com.yunpan.entity.FoldlerInfo;
 import com.yunpan.service.IDiskInfoService;
 import com.yunpan.service.IFileInfoService;
 import com.yunpan.service.IFoldlerInfoService;
+import com.yunpan.service.IHandleXMLFileService;
 import com.yunpan.service.IUserService;
 import com.yunpan.service.impl.DiskInfoServiceImpl;
 import com.yunpan.service.impl.FileInfoServiceImpl;
 import com.yunpan.service.impl.FoldlerInfoServiceImpl;
+import com.yunpan.service.impl.HandleXMLFileServiceImpl;
 import com.yunpan.service.impl.UserServiceImpl;
 import com.yunpan.util.BaseServlet;
 import com.yunpan.util.ConstantUtils;
@@ -29,7 +34,7 @@ import com.yunpan.util.StringHelper;
 
 public class FileUploadServlet extends BaseServlet {
 	private static final long serialVersionUID = -6356484590690885787L;
-
+	private Logger logging = Logger.getLogger(FileUploadServlet.class);
 	public void uploadFile(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("uploadfile");
@@ -48,22 +53,35 @@ public class FileUploadServlet extends BaseServlet {
 		if (!file.exists()) {
 			file.mkdir();
 		}
-
+		String path = request.getSession().getServletContext().getRealPath("WEB-INF/classes/filelimit.xml");
+		IHandleXMLFileService handleXMLFileService = new HandleXMLFileServiceImpl();
+		
+		List<FileLimit> fileLimits = null;
+		try {
+			fileLimits = handleXMLFileService.parseXMLtoLimit(path);
+		} catch (Exception e1) {
+			logging.error(e1.getMessage());
+		}
+		FileLimit fileLimit = fileLimits.get(0);
 		SmartUpload su = new SmartUpload();
 		
 		//后期将会以配置文件的形式配置一下信息
 		// 初始化对象
 		su.initialize(getServletConfig(), request, response);
 		// 设置上传文件大小
-		su.setMaxFileSize(ConstantUtils.UPLOAD_FILE_SIZE);
+		//su.setMaxFileSize(ConstantUtils.UPLOAD_FILE_SIZE);
+		su.setMaxFileSize(Long.parseLong(fileLimit.getFileSize()));
 		// 设置所有文件的大小
-		su.setTotalMaxFileSize(ConstantUtils.UPLOAD_MAX_FILE_SIZE);
+		//su.setTotalMaxFileSize(ConstantUtils.UPLOAD_MAX_FILE_SIZE);
+		su.setTotalMaxFileSize(Long.parseLong(fileLimit.getAllfileSize()));
 		// 设置允许上传文件类型
-		su.setAllowedFilesList(ConstantUtils.UPLOAD_FILE_TYPE);
+		//su.setAllowedFilesList(ConstantUtils.UPLOAD_FILE_TYPE);
+		su.setAllowedFilesList(fileLimit.getFileType());
 		String result = "上传成功！";
 		// 设置禁止上传的文件类型
 		try {
-			su.setDeniedFilesList(ConstantUtils.DENIED_File_TYPE);
+			//su.setDeniedFilesList(ConstantUtils.DENIED_File_TYPE);
+			su.setDeniedFilesList(fileLimit.getDeniedType());
 			// 上传文件
 			su.upload();
 			// 保存上传文件信息（路径，文件名称，所属人）

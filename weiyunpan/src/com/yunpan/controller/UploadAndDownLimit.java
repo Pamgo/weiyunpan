@@ -36,14 +36,21 @@ public class UploadAndDownLimit extends BaseServlet {
 	public void limitUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String fileSize = request.getParameter("fileSize").trim();
+		if(fileSize.contains(".")){
+			int end = fileSize.indexOf(".");
+			fileSize = fileSize.substring(0, end);
+		}
 		String allfileSize = request.getParameter("allfileSize").trim();
+		if(allfileSize.contains(".")){
+			int end = allfileSize.indexOf(".");
+			allfileSize = allfileSize.substring(0,end);
+		}
 		String fileType = request.getParameter("fileType").trim();
 		String deniedType = request.getParameter("deniedType").trim();
 		IHandleXMLFileService fileService = new HandleXMLFileServiceImpl();
 		String path = request.getSession().getServletContext().getRealPath("WEB-INF/classes/filelimit.xml");
 		try {
 			fileService.updateFileLimit(Long.parseLong(fileSize)*1024*1024, Long.parseLong(allfileSize)*1024*1024*1024, fileType, deniedType,path);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
