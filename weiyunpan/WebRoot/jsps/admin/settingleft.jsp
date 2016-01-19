@@ -19,7 +19,9 @@
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
+ <style type="text/css">
+ .menu-list:hover{background-color:#FCAA00;border-right:none;color:#fff;border-bottom: solid 1px #000;}
+ </style>
 </head>
 
 <body>

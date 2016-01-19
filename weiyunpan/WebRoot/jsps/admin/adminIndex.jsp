@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			.setting-menu .memu-title h3{background: url(http://pr.bdimg.com/static/princess/img/setting_sprites_0_ccb7c890.png) 0 0 no-repeat;
 										background-position: 0 -214px;padding-left: 41px; border-left: 4px soli: ;d #2e82ff;
 										display: block;font-weight: bold;position: absolute;left: 0;top: -1px; height: 41px; width: 155px;}
-			.setting-menu .menu-list .menu-item{line-height: 25px; height: 35px; font-size: 13px; width: 198px;border-right: 1px solid #E5E5E5;}
+			.setting-menu .menu-list .menu-item{line-height: 35px; height: 35px; font-size: 13px; width: 198px;border-right: 1px solid #E5E5E5;}
 			.setting-menu .menu-list .menu-item .item-info{text-decoration: none;outline: none;-webkit-transition:color .2s;margin-left: 20px; display: block;
 															color: #666;background: none;list-style: none;}
 		

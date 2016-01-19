@@ -112,7 +112,7 @@
 }
 
 .setting-menu .menu-list .menu-item {
-	line-height: 25px;
+	line-height: 35px;
 	height: 35px;
 	font-size: 13px;
 	width: 198px;
