@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<limits>
+	<limit id="1">
+		<fileSize>524288000</fileSize>
+		<allfileSize>1073741824</allfileSize>
+		<allowType>txt,jpg,gif,png,zip</allowType>
+		<bannedType>jsp,js</bannedType>
+	</limit>
+</limits>
