@@ -2,12 +2,9 @@ package com.yunpan.service.impl;
 
 import java.util.List;
 
-import sun.org.mozilla.javascript.internal.IdScriptableObject;
-
 import com.yunpan.dao.IDiskInfoDao;
 import com.yunpan.dao.impl.DiskInfoDaoImpl;
 import com.yunpan.entity.DiskInfo;
-import com.yunpan.entity.FileInfo;
 import com.yunpan.service.IDiskInfoService;
 
 /**

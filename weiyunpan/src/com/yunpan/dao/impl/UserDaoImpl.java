@@ -1,12 +1,7 @@
 package com.yunpan.dao.impl;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import com.sun.xml.internal.ws.message.StringHeader;
 import com.yunpan.dao.IUserDao;
 import com.yunpan.db.DBUtil;
-import com.yunpan.db.IResultSetUtil;
 import com.yunpan.entity.User;
 import com.yunpan.util.StringHelper;
 
